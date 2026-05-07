@@ -29,11 +29,11 @@ git clone https://github.com/cyamoyed/acr-uploader.git
 cd acr-uploader
 
 # 直接使用 go build 构建（推荐）
-go build -o bin/acr-uploader.exe main.go
+go build -ldflags="-s -w" -gcflags="all=-l" -o bin/acr-uploader.exe main.go
 
 # 或使用 PowerShell 环境变量进行跨平台构建
-$env:GOOS="linux"; $env:GOARCH="amd64"; go build -o bin/acr-uploader-linux-amd64 main.go
-$env:GOOS="darwin"; $env:GOARCH="arm64"; go build -o bin/acr-uploader-darwin-arm64 main.go
+$env:GOOS="linux"; $env:GOARCH="amd64"; go build -ldflags="-s -w" -gcflags="all=-l" -o bin/acr-uploader-linux-amd64 main.go
+$env:GOOS="darwin"; $env:GOARCH="arm64"; go build -ldflags="-s -w" -gcflags="all=-l" -o bin/acr-uploader-darwin-arm64 main.go
 ```
 
 #### Linux/macOS 环境
@@ -43,15 +43,15 @@ $env:GOOS="darwin"; $env:GOARCH="arm64"; go build -o bin/acr-uploader-darwin-arm
 git clone https://github.com/cyamoyed/acr-uploader.git
 cd acr-uploader
 
-# 使用 make 构建
+# 使用 make 构建（推荐，包含优化选项）
 make build          # 构建当前平台
 make build-all      # 构建所有平台
 make build-linux    # 构建 Linux 版本
 make build-windows  # 构建 Windows 版本
 make build-darwin   # 构建 macOS 版本
 
-# 或直接使用 go build
-go build -o bin/acr-uploader main.go
+# 或直接使用 go build（包含优化选项）
+go build -ldflags="-s -w" -gcflags="all=-l" -o bin/acr-uploader main.go
 ```
 
 ### 手动安装
@@ -123,14 +123,6 @@ acr-uploader upload
 - 当前选中的镜像会以 **高亮显示**
 - 按 **Enter 键** 确认选择
 - 按 **Ctrl+C** 取消操作
-
-**界面示例**:
-
-使用上下方向键选择镜像，按 Enter 确认：
-
-![img1](./img1.png)
-![img1](./img2.png)
-![img1](./img3.png)
 
 
 #### 指定镜像上传

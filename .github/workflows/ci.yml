@@ -34,11 +34,11 @@ jobs:
     - name: Build binary
       run: |
         if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-          GOOS=linux GOARCH=amd64 go build -o bin/acr-uploader-linux-amd64 main.go
+          GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -gcflags="all=-l" -o bin/acr-uploader-linux-amd64 main.go
         elif [ "${{ matrix.os }}" = "windows-latest" ]; then
-          GOOS=windows GOARCH=amd64 go build -o bin/acr-uploader-windows-amd64.exe main.go
+          GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -gcflags="all=-l" -o bin/acr-uploader-windows-amd64.exe main.go
         elif [ "${{ matrix.os }}" = "macos-latest" ]; then
-          GOOS=darwin GOARCH=arm64 go build -o bin/acr-uploader-darwin-arm64 main.go
+          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -gcflags="all=-l" -o bin/acr-uploader-darwin-arm64 main.go
         fi
       shell: bash
 
