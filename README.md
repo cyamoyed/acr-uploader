@@ -72,20 +72,28 @@ chmod +x /usr/local/bin/acr-uploader
 首次使用前需要配置阿里云账号信息：
 
 ```bash
-acr-uploader config --username <阿里云账号> --registry <仓库地址> --namespace <命名空间>
+acr-uploader config --username <阿里云账号> --registry <仓库地址> --access-key-id <AccessKey ID>
 
 # 示例
-acr-uploader config --username your-username --registry registry.cn-hangzhou.aliyuncs.com --namespace your-namespace
+acr-uploader config --username your-username --registry registry.cn-hangzhou.aliyuncs.com --access-key-id LTAI5t***
+```
+
+执行命令后会提示输入 AccessKey Secret（输入时不会显示在屏幕上）：
+```
+请输入阿里云AccessKey Secret: ******
+配置成功
 ```
 
 **参数说明**:
-| 参数 | 说明 | 必填 |
-|------|------|------|
-| --username | 阿里云账号用户名 | 是 |
-| --registry | 镜像仓库地址 | 是 |
-| --namespace | 默认命名空间 | 否 |
-| --version | 默认版本号 | 否（默认 latest） |
-| --log-level | 日志级别 | 否（默认 info） |
+| 参数 | 说明 | 必填 | 默认值 |
+|------|------|------|--------|
+| --username | 阿里云账号用户名 | 是 | - |
+| --registry | 镜像仓库地址 | 是 | - |
+| --access-key-id | 阿里云AccessKey ID | 是 | - |
+| --namespace | 默认命名空间 | 否 | - |
+| --region-id | 阿里云区域ID | 否 | cn-hangzhou |
+| --version | 默认版本号 | 否 | latest |
+| --log-level | 日志级别 | 否 | info |
 
 ### 登录
 
@@ -177,7 +185,9 @@ acr-uploader help config
     "registry": "registry.cn-hangzhou.aliyuncs.com",
     "default_namespace": "{your-namespace}",
     "default_version": "latest",
-    "log_level": "info"
+    "log_level": "info",
+    "access_key_id": "LTAI5t***",
+    "region_id": "cn-hangzhou"
 }
 ```
 
@@ -189,12 +199,15 @@ acr-uploader help config
 | default_namespace | string | 默认命名空间 |
 | default_version | string | 默认版本号 |
 | log_level | string | 日志级别（debug/info/warn/error） |
+| access_key_id | string | 阿里云AccessKey ID |
+| region_id | string | 阿里云区域ID |
 
 ## 目录结构
 
 ```
 ~/.acr-uploader/
 ├── config.json          # 配置文件
+├── secret.key           # AccessKey Secret（单独加密存储）
 └── logs/                # 日志目录
     ├── acr-uploader.log # 当前日志
     └── upload-progress/  # 上传进度缓存
@@ -216,7 +229,7 @@ acr-uploader help config
 
 ```bash
 # 1. 配置凭证
-acr-uploader config --username your-username --registry registry.cn-hangzhou.aliyuncs.com --namespace your-namespace
+acr-uploader config --username your-username --registry registry.cn-hangzhou.aliyuncs.com --access-key-id LTAI5t***
 
 # 2. 登录
 acr-uploader login
